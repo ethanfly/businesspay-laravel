@@ -3,7 +3,7 @@
     "description": "Tencent 微企付 (BusinessPay) Laravel SDK wrapper",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "keywords": [
         "laravel",
         "tencent",

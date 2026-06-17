@@ -1,0 +1,66 @@
+{
+    "name": "ethanfly/businesspay-laravel",
+    "description": "Tencent 微企付 (BusinessPay) Laravel SDK wrapper",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "tencent",
+        "businesspay",
+        "微企付",
+        "mse",
+        "entpay"
+    ],
+    "authors": [
+        {
+            "name": "Ethanfly",
+            "email": "ethanfly@example.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0",
+        "illuminate/container": "^7.0|^8.0|^9.0|^10.0|^11.0",
+        "tenpay/entpay": "^3.25"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0|^10.0",
+        "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0",
+        "laravel/pint": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ethanfly\\BusinessPay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ethanfly\\BusinessPay\\Tests\\": "tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./entpay_mse_sdk_php_v3-3.25.0",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ethanfly\\BusinessPay\\BusinessPayServiceProvider"
+            ],
+            "aliases": {
+                "BusinessPay": "Ethanfly\\BusinessPay\\Facades\\BusinessPay"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "format": "vendor/bin/pint"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

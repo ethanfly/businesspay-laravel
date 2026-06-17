@@ -1,0 +1,143 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: curl, json, mbstring, openssl
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run code style check
+        run: composer run format -- --test
+
+      - name: Run tests
+        run: composer run test
+
+  release:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: curl, json, mbstring, openssl
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run tests
+        run: composer run test
+
+      - name: Bump version and release
+        id: bump_version
+        run: |
+          set -e
+
+          # Get current version from composer.json
+          CURRENT_VERSION=$(composer config version 2>/dev/null || echo "0.0.0")
+          echo "Current version: $CURRENT_VERSION"
+
+          # Determine bump type from commit messages since last tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          if [ -z "$LATEST_TAG" ]; then
+            COMMITS=$(git log --pretty=format:%s)
+          else
+            COMMITS=$(git log ${LATEST_TAG}..HEAD --pretty=format:%s)
+          fi
+
+          BUMP_TYPE="patch"
+          if echo "$COMMITS" | grep -qiE '^BREAKING CHANGE|^break|^feat!|^fix!|^refactor!'; then
+            BUMP_TYPE="major"
+          elif echo "$COMMITS" | grep -qiE '^feat|^feature|^add|^新增'; then
+            BUMP_TYPE="minor"
+          fi
+
+          echo "Bump type: $BUMP_TYPE"
+
+          # Parse version parts
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          MAJOR=${MAJOR:-0}
+          MINOR=${MINOR:-0}
+          PATCH=${PATCH:-0}
+
+          case "$BUMP_TYPE" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "New version: $NEW_VERSION"
+
+          # Update composer.json version
+          composer config version "$NEW_VERSION"
+
+          # Update composer.json in the repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add composer.json
+          git commit -m "chore(release): bump version to ${NEW_VERSION}" || true
+
+          # Create tag
+          git tag -a "v${NEW_VERSION}" -m "Release v${NEW_VERSION}"
+
+          # Push commit and tag
+          git push origin HEAD:${{ github.ref_name }} --follow-tags
+
+          echo "version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.bump_version.outputs.tag }}
+          name: ${{ steps.bump_version.outputs.tag }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

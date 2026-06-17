@@ -3,6 +3,7 @@
 namespace Ethanfly\BusinessPay\Api;
 
 use Entpay\Mse\Client\Api\Withdraw;
+use Entpay\Mse\Client\Model\RetrieveBalanceGetParam;
 use Entpay\Mse\Client\Model\WithdrawParam;
 
 class WithdrawProxy extends AbstractApiProxy
@@ -11,6 +12,7 @@ class WithdrawProxy extends AbstractApiProxy
 
     protected $paramMap = [
         'create' => WithdrawParam::class,
+        'retrieveBalance' => RetrieveBalanceGetParam::class,
     ];
 
     /**
@@ -33,6 +35,17 @@ class WithdrawProxy extends AbstractApiProxy
     public function retrieve($withdrawId)
     {
         return $this->callWithoutParam('retrieve', [$withdrawId]);
+    }
+
+    /**
+     * Retrieve withdraw balance.
+     *
+     * @param  array|\Entpay\Mse\Client\Model\RetrieveBalanceGetParam|null  $param
+     * @return \Entpay\Mse\Client\Api\Withdraw
+     */
+    public function retrieveBalance($param = null)
+    {
+        return $this->call('retrieveBalance', $param, RetrieveBalanceGetParam::class);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Ethanfly\BusinessPay\Api;
 
 use Entpay\Mse\Client\Api\Refund;
+use Entpay\Mse\Client\Model\AbnormalToAvailParam;
 use Entpay\Mse\Client\Model\RefundParam;
 
 class RefundProxy extends AbstractApiProxy
@@ -11,6 +12,7 @@ class RefundProxy extends AbstractApiProxy
 
     protected $paramMap = [
         'create' => RefundParam::class,
+        'abnormalToAvail' => AbnormalToAvailParam::class,
     ];
 
     /**
@@ -22,6 +24,17 @@ class RefundProxy extends AbstractApiProxy
     public function create($param)
     {
         return $this->call('create', $param, RefundParam::class);
+    }
+
+    /**
+     * Convert an abnormal refund back to available balance.
+     *
+     * @param  array|\Entpay\Mse\Client\Model\AbnormalToAvailParam  $param
+     * @return \Entpay\Mse\Client\Api\Refund
+     */
+    public function abnormalToAvail($param)
+    {
+        return $this->call('abnormalToAvail', $param, AbnormalToAvailParam::class);
     }
 
     /**

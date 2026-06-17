@@ -8,11 +8,28 @@ use Entpay\Mse\Client\Config\EnvironmentConstant;
 use Entpay\Mse\Client\Config\RequestOptions;
 use Entpay\Mse\Client\Model\ModelInterface;
 use Ethanfly\BusinessPay\Api\BankProxy;
+use Ethanfly\BusinessPay\Api\BatchProfitAllocationCorrectProxy;
 use Ethanfly\BusinessPay\Api\BillProxy;
+use Ethanfly\BusinessPay\Api\DepositAllocationProxy;
 use Ethanfly\BusinessPay\Api\DepositProxy;
 use Ethanfly\BusinessPay\Api\EmployeeProxy;
+use Ethanfly\BusinessPay\Api\FileUploadProxy;
+use Ethanfly\BusinessPay\Api\MseFundProxy;
+use Ethanfly\BusinessPay\Api\MseFundsAccountApplicationProxy;
 use Ethanfly\BusinessPay\Api\PaymentProxy;
+use Ethanfly\BusinessPay\Api\PredepositAcctProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardInfoProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardRechargeProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardRechargeTransferProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardWithdrawTransferProxy;
+use Ethanfly\BusinessPay\Api\PrepaidSupplementProxy;
+use Ethanfly\BusinessPay\Api\PrepaidTradeAllocationProxy;
+use Ethanfly\BusinessPay\Api\PrepaidTransferProxy;
+use Ethanfly\BusinessPay\Api\ProductApplicationProxy;
+use Ethanfly\BusinessPay\Api\ProfitAllocationCorrectProxy;
 use Ethanfly\BusinessPay\Api\ProfitAllocationProxy;
+use Ethanfly\BusinessPay\Api\ProfitAllocationReturnProxy;
+use Ethanfly\BusinessPay\Api\RedirectProxy;
 use Ethanfly\BusinessPay\Api\RefundProxy;
 use Ethanfly\BusinessPay\Api\WithdrawProxy;
 use Ethanfly\BusinessPay\Exceptions\BusinessPayException;
@@ -190,6 +207,142 @@ class BusinessPayAccount
     public function profitAllocation()
     {
         return new ProfitAllocationProxy($this);
+    }
+
+    /**
+     * @return ProfitAllocationCorrectProxy
+     */
+    public function profitAllocationCorrect()
+    {
+        return new ProfitAllocationCorrectProxy($this);
+    }
+
+    /**
+     * @return ProfitAllocationReturnProxy
+     */
+    public function profitAllocationReturn()
+    {
+        return new ProfitAllocationReturnProxy($this);
+    }
+
+    /**
+     * @return BatchProfitAllocationCorrectProxy
+     */
+    public function batchProfitAllocationCorrect()
+    {
+        return new BatchProfitAllocationCorrectProxy($this);
+    }
+
+    /**
+     * @return DepositAllocationProxy
+     */
+    public function depositAllocation()
+    {
+        return new DepositAllocationProxy($this);
+    }
+
+    /**
+     * @return MseFundProxy
+     */
+    public function mseFund()
+    {
+        return new MseFundProxy($this);
+    }
+
+    /**
+     * @return MseFundsAccountApplicationProxy
+     */
+    public function mseFundsAccountApplication()
+    {
+        return new MseFundsAccountApplicationProxy($this);
+    }
+
+    /**
+     * @return FileUploadProxy
+     */
+    public function fileUpload()
+    {
+        return new FileUploadProxy($this);
+    }
+
+    /**
+     * @return RedirectProxy
+     */
+    public function redirect()
+    {
+        return new RedirectProxy($this);
+    }
+
+    /**
+     * @return ProductApplicationProxy
+     */
+    public function productApplication()
+    {
+        return new ProductApplicationProxy($this);
+    }
+
+    /**
+     * @return PrepaidCardRechargeProxy
+     */
+    public function prepaidCardRecharge()
+    {
+        return new PrepaidCardRechargeProxy($this);
+    }
+
+    /**
+     * @return PrepaidCardRechargeTransferProxy
+     */
+    public function prepaidCardRechargeTransfer()
+    {
+        return new PrepaidCardRechargeTransferProxy($this);
+    }
+
+    /**
+     * @return PrepaidCardWithdrawTransferProxy
+     */
+    public function prepaidCardWithdrawTransfer()
+    {
+        return new PrepaidCardWithdrawTransferProxy($this);
+    }
+
+    /**
+     * @return PrepaidCardInfoProxy
+     */
+    public function prepaidCardInfo()
+    {
+        return new PrepaidCardInfoProxy($this);
+    }
+
+    /**
+     * @return PrepaidSupplementProxy
+     */
+    public function prepaidSupplement()
+    {
+        return new PrepaidSupplementProxy($this);
+    }
+
+    /**
+     * @return PrepaidTransferProxy
+     */
+    public function prepaidTransfer()
+    {
+        return new PrepaidTransferProxy($this);
+    }
+
+    /**
+     * @return PrepaidTradeAllocationProxy
+     */
+    public function prepaidTradeAllocation()
+    {
+        return new PrepaidTradeAllocationProxy($this);
+    }
+
+    /**
+     * @return PredepositAcctProxy
+     */
+    public function predepositAcct()
+    {
+        return new PredepositAcctProxy($this);
     }
 
     /**

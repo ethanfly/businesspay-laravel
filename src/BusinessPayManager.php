@@ -3,11 +3,28 @@
 namespace Ethanfly\BusinessPay;
 
 use Ethanfly\BusinessPay\Api\BankProxy;
+use Ethanfly\BusinessPay\Api\BatchProfitAllocationCorrectProxy;
 use Ethanfly\BusinessPay\Api\BillProxy;
+use Ethanfly\BusinessPay\Api\DepositAllocationProxy;
 use Ethanfly\BusinessPay\Api\DepositProxy;
 use Ethanfly\BusinessPay\Api\EmployeeProxy;
+use Ethanfly\BusinessPay\Api\FileUploadProxy;
+use Ethanfly\BusinessPay\Api\MseFundProxy;
+use Ethanfly\BusinessPay\Api\MseFundsAccountApplicationProxy;
 use Ethanfly\BusinessPay\Api\PaymentProxy;
+use Ethanfly\BusinessPay\Api\PredepositAcctProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardInfoProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardRechargeProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardRechargeTransferProxy;
+use Ethanfly\BusinessPay\Api\PrepaidCardWithdrawTransferProxy;
+use Ethanfly\BusinessPay\Api\PrepaidSupplementProxy;
+use Ethanfly\BusinessPay\Api\PrepaidTradeAllocationProxy;
+use Ethanfly\BusinessPay\Api\PrepaidTransferProxy;
+use Ethanfly\BusinessPay\Api\ProductApplicationProxy;
+use Ethanfly\BusinessPay\Api\ProfitAllocationCorrectProxy;
 use Ethanfly\BusinessPay\Api\ProfitAllocationProxy;
+use Ethanfly\BusinessPay\Api\ProfitAllocationReturnProxy;
+use Ethanfly\BusinessPay\Api\RedirectProxy;
 use Ethanfly\BusinessPay\Api\RefundProxy;
 use Ethanfly\BusinessPay\Api\WithdrawProxy;
 use Ethanfly\BusinessPay\Contracts\ConfigRepository;
@@ -142,5 +159,90 @@ class BusinessPayManager
     public function profitAllocation(): ProfitAllocationProxy
     {
         return $this->account()->profitAllocation();
+    }
+
+    public function profitAllocationCorrect(): ProfitAllocationCorrectProxy
+    {
+        return $this->account()->profitAllocationCorrect();
+    }
+
+    public function profitAllocationReturn(): ProfitAllocationReturnProxy
+    {
+        return $this->account()->profitAllocationReturn();
+    }
+
+    public function batchProfitAllocationCorrect(): BatchProfitAllocationCorrectProxy
+    {
+        return $this->account()->batchProfitAllocationCorrect();
+    }
+
+    public function depositAllocation(): DepositAllocationProxy
+    {
+        return $this->account()->depositAllocation();
+    }
+
+    public function mseFund(): MseFundProxy
+    {
+        return $this->account()->mseFund();
+    }
+
+    public function mseFundsAccountApplication(): MseFundsAccountApplicationProxy
+    {
+        return $this->account()->mseFundsAccountApplication();
+    }
+
+    public function fileUpload(): FileUploadProxy
+    {
+        return $this->account()->fileUpload();
+    }
+
+    public function redirect(): RedirectProxy
+    {
+        return $this->account()->redirect();
+    }
+
+    public function productApplication(): ProductApplicationProxy
+    {
+        return $this->account()->productApplication();
+    }
+
+    public function prepaidCardRecharge(): PrepaidCardRechargeProxy
+    {
+        return $this->account()->prepaidCardRecharge();
+    }
+
+    public function prepaidCardRechargeTransfer(): PrepaidCardRechargeTransferProxy
+    {
+        return $this->account()->prepaidCardRechargeTransfer();
+    }
+
+    public function prepaidCardWithdrawTransfer(): PrepaidCardWithdrawTransferProxy
+    {
+        return $this->account()->prepaidCardWithdrawTransfer();
+    }
+
+    public function prepaidCardInfo(): PrepaidCardInfoProxy
+    {
+        return $this->account()->prepaidCardInfo();
+    }
+
+    public function prepaidSupplement(): PrepaidSupplementProxy
+    {
+        return $this->account()->prepaidSupplement();
+    }
+
+    public function prepaidTransfer(): PrepaidTransferProxy
+    {
+        return $this->account()->prepaidTransfer();
+    }
+
+    public function prepaidTradeAllocation(): PrepaidTradeAllocationProxy
+    {
+        return $this->account()->prepaidTradeAllocation();
+    }
+
+    public function predepositAcct(): PredepositAcctProxy
+    {
+        return $this->account()->predepositAcct();
     }
 }

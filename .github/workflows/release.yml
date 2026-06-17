@@ -34,7 +34,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run code style check
-        run: composer run format -- --test
+        run: vendor/bin/pint --test src tests config
 
       - name: Run tests
         run: composer run test

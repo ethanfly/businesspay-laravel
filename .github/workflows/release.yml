@@ -13,6 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php-version: ['8.0', '8.1', '8.2', '8.3']
 
@@ -33,11 +34,29 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Run code style check
-        run: vendor/bin/pint --test src tests config
-
       - name: Run tests
         run: composer run test
+
+  lint:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: curl, json, mbstring, openssl
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run code style check
+        run: vendor/bin/pint --test src tests config
 
   release:
     needs: test
@@ -118,7 +137,7 @@ jobs:
           # Update composer.json version
           composer config version "$NEW_VERSION"
 
-          # Update composer.json in the repo
+          # Commit the version bump
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add composer.json

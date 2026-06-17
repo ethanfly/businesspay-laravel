@@ -1,6 +1,19 @@
+# Normalize all text files to LF line endings (cross-platform consistency)
+* text=auto eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Exclude from Packagist release archives
 /vendor export-ignore
-/tests export-ignore
-/phpunit.xml.dist export-ignore
+/composer.lock export-ignore
+/.gitattributes export-ignore
 /.gitignore export-ignore
 /.github export-ignore
-/composer.lock export-ignore
+/phpunit.xml.dist export-ignore
+/pint.json export-ignore

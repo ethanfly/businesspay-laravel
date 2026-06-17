@@ -42,7 +42,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./entpay_mse_sdk_php_v3-3.25.0",
+            "url": "./sdk/entpay_mse_sdk_php_v3-3.25.0",
             "options": {
                 "symlink": false
             }
